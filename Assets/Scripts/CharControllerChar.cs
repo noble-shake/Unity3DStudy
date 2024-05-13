@@ -16,6 +16,8 @@ public class CharControllerChar : MonoBehaviour
     Vector3 moveDir;
     Vector3 rotateValue;
 
+    Camera mainCam;
+
     //sliding
     [SerializeField] bool isSlope;
     [SerializeField] Vector3 slopeVel;
@@ -24,6 +26,7 @@ public class CharControllerChar : MonoBehaviour
     void Start()
     {
         cController = GetComponent<CharacterController>();
+        mainCam = Camera.main;
     }
 
     private void OnDrawGizmos()
@@ -43,6 +46,14 @@ public class CharControllerChar : MonoBehaviour
         moving();
         jumping();
         checkGravity();
+
+        rotating();
+    }
+
+    // from cinemachine, 시네머신이 어디를 보고 있는지, 데이터만 가져와서 캐릭터가 그 방향을 쳐다보게 하기.
+    private void rotating()
+    {
+        transform.rotation = Quaternion.Euler(0, mainCam.transform.eulerAngles.y,0);
     }
 
     private void checkGround() {
