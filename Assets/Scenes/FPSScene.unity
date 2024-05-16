@@ -133,7 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 50978021}
   - component: {fileID: 50978020}
-  m_Layer: 0
+  - component: {fileID: 50978022}
+  m_Layer: 6
   m_Name: Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sharedProfile: {fileID: 11400000, guid: effd618ef61093c4ba83c78cc9cf094f, type: 2}
-  isGlobal: 1
+  isGlobal: 0
   blendDistance: 0
   weight: 1
   priority: 0
@@ -172,6 +173,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &50978022
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50978019}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 24, y: 24, z: 24}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &353892618
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 353892619}
   - component: {fileID: 353892620}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +247,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4a126ead7bdbd514ea1ce53f5b4b7d58, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -305,7 +327,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!1 &453193036
@@ -556,7 +578,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4bc83a48bd23add459f093dd764a96b8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -611,7 +633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1230516384}
   - component: {fileID: 1230516385}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: ShootLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,7 +730,7 @@ GameObject:
   - component: {fileID: 1238774201}
   - component: {fileID: 1238774200}
   - component: {fileID: 1238774203}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -817,6 +839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fabHitHole: {fileID: 5454060231689268642, guid: d9441f498ff30354dbf3171b86e5b29e, type: 3}
   trsTarget: {fileID: 901010978}
+  muz: {fileID: 353892619}
   lineRenderer: {fileID: 353892620}
   listLight:
   - {fileID: 635453569}
@@ -834,7 +857,7 @@ GameObject:
   - component: {fileID: 1759617193}
   - component: {fileID: 1759617196}
   - component: {fileID: 1759617197}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

@@ -7,9 +7,9 @@ public class GunControl : MonoBehaviour
     [SerializeField] GameObject fabHitHole;
     [SerializeField] Transform trsTarget;
     Camera camMain;
+    [SerializeField] Transform muz;
     [SerializeField] LineRenderer lineRenderer;
     float distance;
-    Vector3 hitPosition;
     RaycastHit hit;
     short shootCounter; // 2byte -30000 ~ 30000 (also, Sorting Layer Range)
 
@@ -34,16 +34,17 @@ public class GunControl : MonoBehaviour
     private void gunPoint() {
         if (Physics.Raycast(camMain.transform.position, camMain.transform.forward, out hit, distance, LayerMask.GetMask("Ground")))
         {
-            
-            transform.LookAt(hitPosition);
+
+            transform.LookAt(hit.point);
         }
     }
 
     private void shoot()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        lineRenderer.SetPosition(0, muz.position);
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            lineRenderer.SetPosition(0, lineRenderer.transform.position);
+            
             // Z-Fighting Problem, need to edit Z-value 
             // Hole Rotation not adjusted.
             // Instantiate(fabHitHole, hitPosition, Quaternion.identity);
@@ -78,7 +79,7 @@ public class GunControl : MonoBehaviour
             lineRenderer.SetPosition(1, listLight[0].transform.position);
             lineRenderer.enabled = true;
 
-            Invoke("clearEffect", 0.1f);
+            Invoke("clearEffect", 0.03f);
         }
     }
 
@@ -87,5 +88,6 @@ public class GunControl : MonoBehaviour
     private void clearEffect() {
         listLight[0].enabled = false;
         listLight[1].enabled = false;
+        lineRenderer.enabled = false;
     }
 }
