@@ -36,6 +36,25 @@ public class NPCNavMesh : MonoBehaviour
     float maxHeightJump;
     [SerializeField] float jumpHeight = 5.5f;
 
+    private bool isSelect = false;
+    public bool IsSelect
+    {
+        get => isSelect;
+        set
+        {
+            isSelect = value;
+            if (isSelect)
+            {
+                mat.color = Color.green;
+            }
+            else
+            {
+                mat.color = Color.white;
+            }
+        }
+    }
+    Material mat;
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -54,6 +73,12 @@ public class NPCNavMesh : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         // agent.SetDestination(); -> Vector3 Input (call by value)  ~ Update 문에서 동작
         // Mesh Surface 밖으로 이동하라고 할 경우, 처리 방법에 대해서도 고려 해야 한다.
+
+        // Material 을 유닛 종류별로 모두 만들지 않고, 매트리얼을 복제하여 다양성을 부여하도록 함.
+        MeshRenderer meshR = GetComponent<MeshRenderer>();
+        mat = Instantiate(meshR.material); // 기존 매트리얼과 같은 세팅의 새로운 매트리얼을 생성
+        meshR.material = mat;
+
         
     }
 
@@ -165,7 +190,9 @@ public class NPCNavMesh : MonoBehaviour
     }
 
     public void SetDestination(Vector3 _pos)
-    { 
+    {
+        if (!isSelect) return;
+
         agent.SetDestination(_pos);
     }
 
