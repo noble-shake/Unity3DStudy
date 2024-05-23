@@ -12,7 +12,80 @@ public class CharacterAnim : MonoBehaviour
     [SerializeField, Range(0, 1f)] float distanceToGround; // 발목 모델링과 땅 사이의 거리
     bool modeChange = false;
 
+    List<string> listDance = new List<string>();
 
+    bool doDance;
+    bool DoDance
+    {
+        set
+        {
+            doDance = true;
+            if (value == true)
+            {
+
+                if (Cursor.lockState == CursorLockMode.Locked)
+                {
+                    anim.SetLayerWeight(1, 0);
+                }
+            }
+            else
+            {
+                if (Cursor.lockState == CursorLockMode.Locked)
+                {
+                    anim.SetLayerWeight(1, 1);
+                }
+            }
+        }
+        get => doDance;
+    }
+
+    public class cDance 
+    {
+        public bool purchase = false;
+        public string danceName = "";
+    }
+
+    private void stopDance()
+    {
+        DoDance = false;
+        anim.Play("Blend Tree");
+    }
+
+    private void initAnimDance() {
+        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;  // 현재 오브젝트에 등록된 애니메이션 컨트롤러 ( = 애니메이터 ) 안에 등록된 애니메이션 스테이트들을 가져온다.
+        int count = clips.Length;
+        for (int inum = 0; inum < count; ++inum)
+        {
+            if (clips[inum].name.Contains("Dance_"))
+            {
+                listDance.Add(clips[inum].name);
+            }
+        }
+    }
+
+    private void checkDance()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) 
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                anim.SetLayerWeight(1, 0);
+            }
+            // anim.Play(listDance[0]);
+            anim.CrossFade(listDance[0], 0.05f);
+            DoDance = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                anim.SetLayerWeight(1, 0);
+            }
+            // anim.Play(listDance[1]);
+            anim.CrossFade(listDance[0], 0.05f);
+            DoDance = true;
+        }
+    }
     private void OnAnimatorIK(int layerIndex)
     {
         if (LookatObject != null)
@@ -62,7 +135,8 @@ public class CharacterAnim : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        anim = GetComponent<Animator>();        
+        anim = GetComponent<Animator>();
+        initAnimDance();
     }
 
 
@@ -70,12 +144,13 @@ public class CharacterAnim : MonoBehaviour
     {
         Move();
         checkAnim();
+        checkDance();
 
     }
 
     private void checkAnim()
     {
-        if (!modeChange && Input.GetKeyDown(KeyCode.LeftControl))
+        if (!DoDance && !modeChange && Input.GetKeyDown(KeyCode.LeftControl))
         {
             modeChange = true;
             if (Cursor.lockState == CursorLockMode.Locked)
@@ -95,11 +170,17 @@ public class CharacterAnim : MonoBehaviour
     {
         // anim.SetFloat("SpeedVertical", Input.GetAxisRaw("Vertical"));
         //anim.SetFloat("SpeedHorizontal", Input.GetAxisRaw("Horizontal"));
-
+        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
 
         // blend tree animation
-        anim.SetFloat("SpeedVertical", Input.GetAxis("Vertical"));
-        anim.SetFloat("SpeedHorizontal", Input.GetAxis("Horizontal"));
+        anim.SetFloat("SpeedVertical", vertical);
+        anim.SetFloat("SpeedHorizontal", horizontal);
+
+        if (vertical != 0 || horizontal != 0)
+        {
+            stopDance();
+        }
 
     }
 
