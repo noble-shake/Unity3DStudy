@@ -7,6 +7,7 @@ public class ProjectileManager : MonoBehaviour
 {
     [SerializeField] GameObject objCursor;
     Camera camMain;
+    
 
     // Start is called before the first frame update
     void Start()
